@@ -8,7 +8,7 @@
 
 #import "AppDelegate.h"
 
-@interface AppDelegate ()
+@interface AppDelegate () <UITabBarControllerDelegate>
 
 @end
 
@@ -17,7 +17,18 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    UITabBarController *rootVC = (UITabBarController *)self.window.rootViewController;
+    rootVC.delegate = self;
     return YES;
+}
+
+- (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController
+{
+    //set up crossfade transition
+    CATransition *transition = [CATransition animation];
+    transition.type = kCATransitionFade;
+    //apply transition to tab bar controller's view
+    [self.window.rootViewController.view.layer addAnimation:transition forKey:nil];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
